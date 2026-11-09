@@ -446,7 +446,8 @@ footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero
         var ht = document.createElement("div"); ht.className = "heat-title";
         var h3 = document.createElement("h3"); h3.textContent = (cat === "women" ? "Women's heat " : "Open heat ") + (idx + 1);
         var tag = document.createElement("span"); tag.className = "label";
-        tag.textContent = idx === heats.length - 1 && heats.length > 1 ? "Fastest heat" : fmt(heat[0].mileSecs) + " to " + fmt(heat[heat.length - 1].mileSecs);
+        var lo = fmt(heat[0].mileSecs), hi = fmt(heat[heat.length - 1].mileSecs);
+        tag.textContent = idx === heats.length - 1 && heats.length > 1 ? "Fastest heat" : lo === hi ? lo : lo + " to " + hi;
         ht.appendChild(h3); ht.appendChild(tag); hEl.appendChild(ht);
         heat.forEach(function (e, lane) {
           var row = document.createElement("div"); row.className = "entry";
