@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wharton Movember Beer Mile</title>
+<meta name="description" content="Four laps, four drinks, one mile. Thursday 19 November, 4:30pm, South Fields at Penn. All proceeds to Movember.">
+<meta property="og:title" content="Wharton Movember Beer Mile">
+<meta property="og:description" content="Thu 19 Nov, 4:30pm, South Fields at Penn. $10 to run, $5 to watch, all to Movember. Sign up for a heat.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000'/%3E%3Cpath d='M32 30c-4-6-12-8-17-4-3 2-4 6-8 6 2 6 9 9 15 7 4-1 7-4 10-6 3 2 6 5 10 6 6 2 13-1 15-7-4 0-5-4-8-6-5-4-13-2-17 4z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Overpass:wght@400;600;800&display=swap">
+<style>
+/* Layout: Movember house style. Black band hero with lane lines, white page, black pill buttons, Anton display over Overpass body. Monochrome; black is the only accent. */
+:root {
+  --bg: #ffffff;
+  --surface: #f4f4f4;
+  --line: #e0e0e0;
+  --fg: #000000;
+  --muted: #5a5a5a;
+  --accent: #000000;
+  --accent-ink: #ffffff;
+  --accent-soft: #ececec;
+  --hero-bg: #000000;
+  --hero-fg: #fcfcfe;
+  --good: #1f7a3d;
+  --warn: #b42318;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --body: "Overpass", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c0c0c; --surface: #161616; --line: #2c2c2c; --fg: #fcfcfe; --muted: #a6a6a6;
+    --accent: #fcfcfe; --accent-ink: #000000; --accent-soft: #232323; --hero-bg: #000000; --hero-fg: #fcfcfe;
+    --good: #7fd3a1; --warn: #f59a8a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c0c0c; --surface: #161616; --line: #2c2c2c; --fg: #fcfcfe; --muted: #a6a6a6;
+  --accent: #fcfcfe; --accent-ink: #000000; --accent-soft: #232323; --hero-bg: #000000; --hero-fg: #fcfcfe;
+  --good: #7fd3a1; --warn: #f59a8a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 880px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; line-height: 0.95; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2.2rem, 6vw, 3rem); }
+h3 { font-size: 1.4rem; letter-spacing: 0.01em; }
+p { margin: 0; }
+a { color: var(--fg); text-underline-offset: 3px; }
+.label { font-family: var(--body); font-weight: 800; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { background: var(--hero-bg); color: var(--hero-fg); position: relative; overflow: hidden; }
+.hero .wrap { padding-block: 44px 40px; display: grid; gap: 22px; position: relative; }
+.lanes { position: absolute; inset: 0; pointer-events: none; opacity: 0.12;
+  background: repeating-linear-gradient(180deg, transparent 0 46px, currentColor 46px 48px); }
+.hero h1 { font-size: clamp(3.4rem, 13vw, 7.4rem); }
+.hero .kicker { font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.85rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 26px; font-family: var(--display); font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.02em; }
+.facts span { white-space: nowrap; }
+.countdown { display: flex; gap: 22px; flex-wrap: wrap; }
+.countdown div { display: grid; }
+.countdown b { font-family: var(--display); font-weight: 400; font-size: 2.8rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.countdown small { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--body); font-weight: 800; font-size: 0.9rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px 22px 10px; border-radius: 999px; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); text-decoration: none; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.hero .btn { background: var(--hero-fg); color: var(--hero-bg); border-color: var(--hero-fg); }
+.hero .btn.ghost { background: transparent; color: var(--hero-fg); }
+.btn:focus-visible, input:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.hero .btn:focus-visible { outline-color: var(--hero-fg); }
+.btn[disabled] { opacity: 0.5; cursor: default; }
+
+/* Sections */
+main section { padding-block: 44px; display: grid; gap: 18px; }
+main section + section { border-top: 1px solid var(--line); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.two > * { min-width: 0; }
+@media (max-width: 680px) { .two { grid-template-columns: 1fr; } }
+.stack { display: grid; gap: 12px; }
+.rules { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; counter-reset: lap; }
+.rules li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: baseline; }
+.rules li::before { counter-increment: lap; content: counter(lap); font-family: var(--display); font-size: 1.8rem; line-height: 1; color: var(--fg); text-align: center; }
+.map { background: var(--surface); border-radius: 8px; padding: 12px; display: grid; gap: 8px; }
+.map svg { width: 100%; height: auto; display: block; }
+.map svg text { font-family: var(--body); }
+.price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.price div { background: var(--surface); border-radius: 8px; padding: 16px; display: grid; gap: 4px; }
+.price b { font-family: var(--display); font-weight: 400; font-size: 3rem; line-height: 1; color: var(--fg); }
+.venmo { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.handle { font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.01em; user-select: all; }
+.note { color: var(--muted); font-size: 0.92rem; }
+
+/* Form */
+form { display: grid; gap: 14px; background: var(--surface); border-radius: 8px; padding: 20px; }
+.field { display: grid; gap: 6px; }
+.field label, .field legend { font-weight: 600; font-size: 0.95rem; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.row > * { min-width: 0; }
+@media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+input[type=text], select { font: inherit; padding: 10px 12px; border: 2px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); width: 100%; }
+input[type=text]:focus { border-color: var(--accent); }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg label { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 2px solid var(--line); border-radius: 999px; background: var(--bg); cursor: pointer; font-weight: 600; }
+.seg input { accent-color: var(--accent); }
+.seg label:has(input:checked) { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+.predict { font-size: 0.95rem; color: var(--muted); }
+.predict b { color: var(--fg); font-variant-numeric: tabular-nums; }
+.msg { font-weight: 600; }
+.msg.ok { color: var(--good); }
+.msg.err { color: var(--warn); }
+.fallback { display: grid; gap: 10px; background: var(--bg); border: 2px solid var(--accent); border-radius: 8px; padding: 14px 16px; }
+.fallback code { font-family: var(--body); font-weight: 600; background: var(--surface); padding: 8px 10px; border-radius: 6px; display: block; overflow-wrap: anywhere; }
+.inline { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+
+/* Heat sheet */
+.sheet-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 10px; }
+.tally { display: flex; gap: 24px; }
+.tally div { display: grid; }
+.tally b { font-family: var(--display); font-weight: 400; font-size: 2.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.cat { display: grid; gap: 14px; }
+.heat { display: grid; gap: 0; }
+.heat-title { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 3px solid var(--fg); }
+.heat-title h3 { color: var(--fg); }
+.entry { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.entry .lane { font-family: var(--display); font-size: 1.3rem; color: var(--muted); text-align: center; }
+.entry .who { min-width: 0; overflow-wrap: anywhere; font-weight: 600; }
+.entry .who small { display: block; color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+.entry .time { font-variant-numeric: tabular-nums; font-weight: 600; }
+.pill { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 9px 1px; border-radius: 999px; border: 1.5px solid currentColor; white-space: nowrap; }
+.pill.paid { color: var(--good); }
+.pill.unpaid { color: var(--muted); }
+.owner-tools { display: flex; gap: 6px; }
+.mini { font: inherit; font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; text-decoration: none; }
+.mini.danger { color: var(--warn); border-color: var(--warn); }
+.empty { background: var(--surface); border-radius: 8px; padding: 22px; display: grid; gap: 6px; }
+footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero-bg); font-size: 0.9rem; }
+@media (max-width: 520px) {
+  .entry { grid-template-columns: 28px minmax(0, 1fr) auto; }
+  .entry .status { grid-column: 2 / -1; justify-self: start; display: flex; gap: 8px; align-items: center; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lanes { animation: drift 18s linear infinite; }
+  @keyframes drift { to { background-position: 0 96px; } }
+}
+</style>
+</head>
+<body>
+
+
+<header class="hero">
+  <div class="lanes" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="kicker">Wharton Mo-Bros present</p>
+    <h1>The Movember Beer Mile</h1>
+    <div class="facts">
+      <span>Thu 19 Nov</span><span>4:30 pm</span><span>South Fields, Penn Park</span>
+    </div>
+    <p style="max-width:58ch">Four laps. Four drinks. One mile. Every dollar goes to Movember and men's health. Run it, chug it, or just come and heckle.</p>
+    <div class="countdown" id="countdown" aria-live="off">
+      <div><b id="cd-d">14</b><small>days</small></div>
+      <div><b id="cd-h">05</b><small>hours</small></div>
+      <div><b id="cd-m">05</b><small>mins</small></div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="#enter">Enter the race</a>
+      <a class="btn ghost" href="https://us.movember.com/donate/details?teamId=2495429" target="_blank" rel="noopener">Donate to the team</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="details" class="two">
+    <div class="stack">
+      <span class="label">The race</span>
+      <h2>How a beer mile works</h2>
+      <ol class="rules">
+        <li><p>Drink a can in the transition zone, then run lap one.</p></li>
+        <li><p>Back to the zone, can number two, lap two.</p></li>
+        <li><p>Same again. Can three, lap three.</p></li>
+        <li><p>Final can, final lap, glory. Four cans and four laps make the mile.</p></li>
+      </ol>
+      <p class="note">Bring four 12 oz cans. Beer, seltzer or non-alcoholic all count, and 21+ only for anything alcoholic. Cans must be empty before you leave the zone. Lose your drink on the course and you run a penalty lap.</p>
+    </div>
+    <div class="stack">
+      <span class="label">Where</span>
+      <div class="map">
+        <svg viewBox="0 0 320 230" role="img" aria-label="Schematic map: South Fields sit at the south end of Penn Park, between Walnut Street and South Street on the Schuylkill River side of campus">
+          <rect x="0" y="0" width="320" height="230" fill="var(--surface)"/>
+          <path d="M262 0 C 250 60, 282 120, 262 170 S 270 215, 266 230 L 320 230 L 320 0 Z" fill="var(--accent-soft)"/>
+          <text x="296" y="118" font-size="10" fill="var(--muted)" text-anchor="middle" transform="rotate(90 296 118)">Schuylkill River</text>
+          <rect x="70" y="40" width="182" height="160" rx="6" fill="var(--bg)" stroke="var(--line)" stroke-width="2"/>
+          <text x="82" y="58" font-size="10" font-weight="600" fill="var(--muted)">PENN PARK</text>
+          <rect x="86" y="70" width="70" height="44" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="166" y="70" width="70" height="44" rx="4" fill="var(--surface)" stroke="var(--line)"/>
+          <rect x="86" y="132" width="150" height="54" rx="4" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="161" y="181" font-size="11" font-weight="600" fill="var(--accent)" text-anchor="middle">SOUTH FIELDS</text>
+          <path d="M161 137 c-7 0 -12 5 -12 12 c0 9 12 17 12 17 s12 -8 12 -17 c0 -7 -5 -12 -12 -12 z" fill="var(--accent)"/>
+          <circle cx="161" cy="149" r="4" fill="var(--bg)"/>
+          <line x1="0" y1="22" x2="262" y2="22" stroke="var(--line)" stroke-width="5"/>
+          <text x="50" y="16" font-size="10" fill="var(--muted)">Walnut St</text>
+          <line x1="0" y1="214" x2="266" y2="214" stroke="var(--line)" stroke-width="5"/>
+          <text x="50" y="208" font-size="10" fill="var(--muted)">South St</text>
+          <line x1="42" y1="22" x2="42" y2="214" stroke="var(--line)" stroke-width="4"/>
+          <text x="36" y="120" font-size="10" fill="var(--muted)" text-anchor="middle" transform="rotate(-90 36 120)">Penn campus this way</text>
+        </svg>
+        <p class="note">Schematic, not to scale. <a href="https://www.google.com/maps/search/?api=1&amp;query=Penn+Park+Philadelphia+PA" target="_blank" rel="noopener">Open Penn Park in Google Maps</a></p>
+      </div>
+      <a class="btn ghost" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Wharton+Movember+Beer+Mile&amp;dates=20261119T213000Z/20261119T230000Z&amp;location=South+Fields%2C+Penn+Park%2C+Philadelphia&amp;details=Four+laps%2C+four+drinks%2C+one+mile.+All+proceeds+to+Movember." target="_blank" rel="noopener">Add to Google Calendar</a>
+    </div>
+  </section>
+
+  <section id="movember" class="two">
+    <div class="stack">
+      <span class="label">The cause</span>
+      <h2>Why we grow</h2>
+      <p>Movember is the leading charity changing the face of men's health. Every November, teams grow moustaches and raise money for men's mental health and suicide prevention, prostate cancer and testicular cancer.</p>
+      <p>Last year the Wharton Mo-Bros raised <b class="num">$1,466</b>. This race is how we beat it.</p>
+    </div>
+    <div class="stack">
+      <span class="label">Entry</span>
+      <div class="price">
+        <div><b class="num">$10</b><span>to run</span></div>
+        <div><b class="num">$5</b><span>to spectate</span></div>
+      </div>
+      <p>Every cent goes to Movember. Pay either way:</p>
+      <a class="btn" href="https://us.movember.com/donate/details?teamId=2495429" target="_blank" rel="noopener">Donate on our team page</a>
+      <div class="venmo">
+        <span>or Venmo</span>
+        <span class="handle" id="venmo-handle">@benjiflacks</span>
+        <button class="mini" type="button" id="copy-venmo">Copy</button>
+        <a class="mini" href="https://venmo.com/u/benjiflacks" target="_blank" rel="noopener" style="text-decoration:none">Open Venmo</a>
+      </div>
+      <p class="note">Donating more than the fee is very welcome. Venmo money is passed straight on to the team page.</p>
+    </div>
+  </section>
+
+  <section id="enter">
+    <div class="stack">
+      <span class="label">Sign up</span>
+      <h2>Enter the race</h2>
+      <p style="max-width:62ch">We run in <b>heats</b>, seeded by your current best mile time, so you race people at your pace. There is a dedicated <b>women's category</b> with its own heats. Be honest, nobody is checking, but the heat you land in depends on it.</p>
+    </div>
+
+    <form id="entry-form" novalidate>
+      <div class="row">
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" autocomplete="name" maxlength="60" placeholder="First and last name" required>
+        </div>
+        <div class="field">
+          <label for="f-time">Current best mile (mm:ss)</label>
+          <input type="text" id="f-time" inputmode="numeric" maxlength="5" placeholder="e.g. 6:45" required>
+        </div>
+      </div>
+      <fieldset>
+        <legend>Category</legend>
+        <div class="seg">
+          <label><input type="radio" name="cat" id="f-cat-open" value="Open" checked> Open</label>
+          <label><input type="radio" name="cat" id="f-cat-women" value="Women's"> Women's</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>How are you paying the $10?</legend>
+        <div class="seg">
+          <label><input type="radio" name="pay" id="f-pay-venmo" value="Venmo" checked> Venmo</label>
+          <label><input type="radio" name="pay" id="f-pay-movember" value="Team page"> Team page</label>
+          <label><input type="radio" name="pay" id="f-pay-later" value="On the day"> On the day</label>
+        </div>
+      </fieldset>
+      <p class="predict" id="predict">Predicted beer mile: <b>enter a mile time</b> (a rough guess with 15 seconds a can)</p>
+      <div class="actions">
+        <button class="btn" type="submit" id="submit-btn">Lock in my entry</button>
+      </div>
+      <p class="msg" id="form-msg" role="status"></p>
+      <p class="note">Made a mistake? Just enter again with the same name and your latest entry replaces the old one.</p>
+    </form>
+  </section>
+
+  <section id="heats">
+    <div class="sheet-head">
+      <div class="stack" style="gap:8px">
+        <span class="label">Provisional</span>
+        <h2>Heat sheet</h2>
+      </div>
+      <div class="tally">
+        <div><b id="t-runners">0</b><span class="label">runners</span></div>
+        <div><b id="t-heats">0</b><span class="label">heats</span></div>
+      </div>
+    </div>
+    <p class="note">Heats of up to 8, seeded by best mile. Slower heats go first and the fastest heat closes out each category. Updates every minute; final heats are confirmed on the day.</p>
+    <div id="sheet" class="stack" style="gap:28px">
+      <div class="empty" id="sheet-empty">
+        <h3>Loading the start list</h3>
+        <p class="note">Entries appear here as people sign up.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Organised by the Wharton Mo-Bros for Movember 2026. Questions: find Benji Flacks. Please drink responsibly and get home safe.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var EVENT_MS = Date.UTC(2026, 10, 19, 21, 30); // 4:30pm EST, 19 Nov 2026
+  var HEAT_SIZE = 8;
+  var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdLFaDr2ogrJJG-2r7Kyx9DUtV0TbB7BJPba0wToofFSggB7w/formResponse";
+  var FIELDS = { name: "entry.1643995344", time: "entry.1187125743", cat: "entry.341295084", pay: "entry.1151848748" };
+  var SHEET_URL = "https://docs.google.com/spreadsheets/d/1sWWIhu0PY-wRazWG1-W5inkXXygGHsGDljEbrfjJSpc/gviz/tq?gid=412440919";
+  var $ = function (id) { return document.getElementById(id); };
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function tick() {
+    var ms = EVENT_MS - Date.now();
+    if (ms <= 0) {
+      var cd = $("countdown"); cd.textContent = "";
+      var b = document.createElement("b");
+      b.style.fontFamily = "var(--display)"; b.style.fontWeight = "400"; b.style.fontSize = "2.2rem";
+      b.textContent = Date.now() - EVENT_MS < 3 * 3600e3 ? "Race day. Get to the South Fields." : "That's a wrap. Thanks for running.";
+      cd.appendChild(b);
+      return false;
+    }
+    var m = Math.floor(ms / 60000);
+    $("cd-d").textContent = Math.floor(m / 1440);
+    $("cd-h").textContent = pad(Math.floor((m % 1440) / 60));
+    $("cd-m").textContent = pad(m % 60);
+    return true;
+  }
+  if (tick()) { var cdTimer = setInterval(function () { if (!tick()) clearInterval(cdTimer); }, 20000); }
+
+  function parseTime(s) {
+    var m = String(s || "").trim().match(/^(\d{1,2})[:.](\d{2})$/);
+    if (!m) return null;
+    var secs = +m[1] * 60 + +m[2];
+    if (+m[2] > 59 || secs < 210 || secs > 1500) return null;
+    return secs;
+  }
+  function fmt(secs) { secs = Math.round(secs); return Math.floor(secs / 60) + ":" + pad(secs % 60); }
+  function radio(name) { var el = document.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : null; }
+  function msg(text, kind) { var el = $("form-msg"); el.textContent = text; el.className = "msg" + (kind ? " " + kind : ""); }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  $("copy-venmo").addEventListener("click", function () {
+    var btn = this, done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+    var sel = function () { var r = document.createRange(); r.selectNodeContents($("venmo-handle")); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected"; };
+    try { navigator.clipboard.writeText("@benjiflacks").then(done, sel); } catch (e) { sel(); }
+  });
+
+  function updatePredict() {
+    var secs = parseTime($("f-time").value), p = $("predict");
+    p.textContent = "Predicted beer mile: ";
+    var b = document.createElement("b"); b.textContent = secs ? fmt(secs * 1.1 + 60) : "enter a mile time";
+    p.appendChild(b); p.appendChild(document.createTextNode(" (a rough guess with 15 seconds a can)"));
+  }
+  $("f-time").addEventListener("input", updatePredict);
+
+  // Entries from the Google Sheet
+  var entries = [], pending = null;
+  function cellTime(c) {
+    if (!c) return null;
+    if (Array.isArray(c.v)) return c.v[0] * 60 + c.v[1]; // Sheets read "6:45" as a time of day
+    var s = String(c.v != null ? c.v : c.f || "");
+    var m = s.match(/(\d{1,2})[:.](\d{2})/);
+    if (m) return +m[1] * 60 + +m[2];
+    return null;
+  }
+  function cellStr(c) { return c ? String(c.f != null && typeof c.v !== "string" ? c.f : c.v != null ? c.v : "").trim() : ""; }
+  function isPaid(c) {
+    if (!c || c.v == null || c.v === "") return false;
+    if (c.v === true) return true;
+    return !/^(no|n|false|0|unpaid)$/i.test(String(c.v).trim());
+  }
+  window.__beerMileSheet = function (resp) {
+    if (!resp || resp.status !== "ok") { sheetError(); return; }
+    var rows = resp.table.rows || [];
+    var byName = {};
+    rows.forEach(function (r, i) {
+      var c = r.c || [];
+      var name = cellStr(c[1]), secs = cellTime(c[2]);
+      if (!name || !secs || secs < 180 || secs > 1800) return;
+      var key = name.toLowerCase().replace(/\s+/g, " ");
+      byName[key] = { name: name, mileSecs: secs, category: /women/i.test(cellStr(c[3])) ? "women" : "open", payment: cellStr(c[4]), paid: isPaid(c[5]), order: i };
+    });
+    entries = Object.keys(byName).map(function (k) { return byName[k]; });
+    if (pending && byName[pending.name.toLowerCase().replace(/\s+/g, " ")]) pending = null;
+    render();
+  };
+  function sheetError() {
+    var e = $("sheet-empty");
+    if (e && !entries.length) e.querySelector("p").textContent = "The start list can't be loaded right now. Your entry still counts once you've submitted it.";
+  }
+  var loadTimer = null;
+  function loadSheet() {
+    var old = document.getElementById("sheet-jsonp"); if (old) old.remove();
+    var s = document.createElement("script");
+    s.id = "sheet-jsonp";
+    s.src = SHEET_URL + "&tqx=out:json;responseHandler:__beerMileSheet&t=" + Date.now();
+    s.onerror = sheetError;
+    document.body.appendChild(s);
+  }
+
+  function render() {
+    var sheet = $("sheet");
+    sheet.textContent = "";
+    var list = entries.slice();
+    if (pending) list.push(pending);
+    $("t-runners").textContent = list.length;
+    if (!list.length) {
+      var empty = document.createElement("div"); empty.className = "empty"; empty.id = "sheet-empty";
+      var h = document.createElement("h3"); h.textContent = "No runners yet";
+      var p = document.createElement("p"); p.className = "note";
+      p.textContent = "Be the first name on the start list. Enter above and you'll appear here, seeded into a heat.";
+      empty.appendChild(h); empty.appendChild(p); sheet.appendChild(empty);
+      $("t-heats").textContent = 0;
+      return;
+    }
+    var mine = (store("beerMileName") || "").toLowerCase();
+    var totalHeats = 0;
+    ["women", "open"].forEach(function (cat) {
+      var group = list.filter(function (e) { return e.category === cat; }).sort(function (a, b) { return a.mileSecs - b.mileSecs; });
+      if (!group.length) return;
+      var heats = [];
+      for (var i = 0; i < group.length; i += HEAT_SIZE) heats.push(group.slice(i, i + HEAT_SIZE));
+      heats.reverse();
+      totalHeats += heats.length;
+      var block = document.createElement("div"); block.className = "cat";
+      var title = document.createElement("span"); title.className = "label";
+      title.textContent = (cat === "women" ? "Women's" : "Open") + " category, " + group.length + (group.length === 1 ? " runner" : " runners");
+      block.appendChild(title);
+      heats.forEach(function (heat, idx) {
+        var hEl = document.createElement("div"); hEl.className = "heat";
+        var ht = document.createElement("div"); ht.className = "heat-title";
+        var h3 = document.createElement("h3"); h3.textContent = (cat === "women" ? "Women's heat " : "Open heat ") + (idx + 1);
+        var tag = document.createElement("span"); tag.className = "label";
+        tag.textContent = idx === heats.length - 1 && heats.length > 1 ? "Fastest heat" : fmt(heat[0].mileSecs) + " to " + fmt(heat[heat.length - 1].mileSecs);
+        ht.appendChild(h3); ht.appendChild(tag); hEl.appendChild(ht);
+        heat.forEach(function (e, lane) {
+          var row = document.createElement("div"); row.className = "entry";
+          var ln = document.createElement("span"); ln.className = "lane"; ln.textContent = lane + 1;
+          var who = document.createElement("span"); who.className = "who"; who.textContent = e.name;
+          if (mine && e.name.toLowerCase() === mine) { var me = document.createElement("small"); me.textContent = e === pending ? "You (saving)" : "You"; who.appendChild(me); }
+          var tm = document.createElement("span"); tm.className = "time"; tm.textContent = fmt(e.mileSecs);
+          var status = document.createElement("span"); status.className = "status";
+          var pill = document.createElement("span");
+          pill.className = "pill " + (e.paid ? "paid" : "unpaid");
+          pill.textContent = e.paid ? "Paid" : "Not yet paid";
+          status.appendChild(pill);
+          row.appendChild(ln); row.appendChild(who); row.appendChild(tm); row.appendChild(status);
+          hEl.appendChild(row);
+        });
+        block.appendChild(hEl);
+      });
+      sheet.appendChild(block);
+    });
+    $("t-heats").textContent = totalHeats;
+  }
+
+  // Submit to the Google Form
+  $("entry-form").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var name = $("f-name").value.trim().replace(/\s+/g, " ");
+    var secs = parseTime($("f-time").value);
+    if (!name) { msg("Add your name so we know who to cheer for.", "err"); $("f-name").focus(); return; }
+    if (!secs) { msg("Enter your mile time as minutes and seconds, like 6:45 (between 3:30 and 25:00).", "err"); $("f-time").focus(); return; }
+    var cat = radio("cat"), pay = radio("pay");
+    var body = new URLSearchParams();
+    body.set(FIELDS.name, name); body.set(FIELDS.time, fmt(secs)); body.set(FIELDS.cat, cat); body.set(FIELDS.pay, pay);
+    var btn = $("submit-btn"); btn.disabled = true;
+    msg("Saving...", "");
+    fetch(FORM_URL, { method: "POST", mode: "no-cors", body: body }).then(function () {
+      btn.disabled = false;
+      store("beerMileName", name);
+      entries = entries.filter(function (e) { return e.name.toLowerCase() !== name.toLowerCase(); });
+      pending = { name: name, mileSecs: secs, category: /women/i.test(cat) ? "women" : "open", payment: pay, paid: false };
+      render();
+      msg("You're in. Find your heat below." + (pay === "Venmo" ? " Now send $10 to @benjiflacks on Venmo." : pay === "Team page" ? " Now donate $10 on the team page." : " Bring $10 on the day."), "ok");
+      setTimeout(loadSheet, 4000);
+      setTimeout(loadSheet, 15000);
+    }, function () {
+      btn.disabled = false;
+      msg("That didn't go through. Check your connection and try again.", "err");
+    });
+  });
+
+  updatePredict();
+  loadSheet();
+  setInterval(function () { if (document.visibilityState === "visible") loadSheet(); }, 60000);
+})();
+</script>
+</body>
+</html>
