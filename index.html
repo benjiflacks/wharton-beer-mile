@@ -131,7 +131,7 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
 .heat { display: grid; gap: 0; }
 .heat-title { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 3px solid var(--fg); }
 .heat-title h3 { color: var(--fg); }
-.entry { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.entry { display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); }
 .entry .lane { font-family: var(--display); font-size: 1.3rem; color: var(--muted); text-align: center; }
 .entry .who { min-width: 0; overflow-wrap: anywhere; font-weight: 600; }
 .entry .who small { display: block; color: var(--muted); font-weight: 400; font-size: 0.8rem; }
@@ -146,7 +146,6 @@ fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 6px; }
 footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero-bg); font-size: 0.9rem; }
 @media (max-width: 520px) {
   .entry { grid-template-columns: 28px minmax(0, 1fr) auto; }
-  .entry .status { grid-column: 2 / -1; justify-self: start; display: flex; gap: 8px; align-items: center; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .lanes { animation: drift 18s linear infinite; }
@@ -458,12 +457,7 @@ footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero
           var who = document.createElement("span"); who.className = "who"; who.textContent = e.name;
           if (mine && e.name.toLowerCase() === mine) { var me = document.createElement("small"); me.textContent = e === pending ? "You (saving)" : "You"; who.appendChild(me); }
           var tm = document.createElement("span"); tm.className = "time"; tm.textContent = fmt(e.mileSecs);
-          var status = document.createElement("span"); status.className = "status";
-          var pill = document.createElement("span");
-          pill.className = "pill " + (e.paid ? "paid" : "unpaid");
-          pill.textContent = e.paid ? "Paid" : "Not yet paid";
-          status.appendChild(pill);
-          row.appendChild(ln); row.appendChild(who); row.appendChild(tm); row.appendChild(status);
+          row.appendChild(ln); row.appendChild(who); row.appendChild(tm);
           hEl.appendChild(row);
         });
         block.appendChild(hEl);
