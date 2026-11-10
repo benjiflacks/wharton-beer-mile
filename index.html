@@ -258,8 +258,8 @@ footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero
           <input type="text" id="f-name" autocomplete="name" maxlength="60" placeholder="First and last name" required>
         </div>
         <div class="field">
-          <label for="f-time">Current best mile (mm:ss)</label>
-          <input type="text" id="f-time" inputmode="numeric" maxlength="5" placeholder="e.g. 6:45" required>
+          <label for="f-time">Current best mile (minutes and seconds)</label>
+          <input type="text" id="f-time" inputmode="decimal" autocomplete="off" maxlength="6" placeholder="e.g. 6:45 or 645" required>
         </div>
       </div>
       <fieldset>
@@ -343,7 +343,9 @@ footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero
   if (tick()) { var cdTimer = setInterval(function () { if (!tick()) clearInterval(cdTimer); }, 20000); }
 
   function parseTime(s) {
-    var m = String(s || "").trim().match(/^(\d{1,2})[:.](\d{2})$/);
+    var t = String(s || "").trim().replace(/[\u2019'"]/g, ":");
+    // Accept 6:45, 6.45, 6,45, 6 45 or just digits like 645 / 1005 (iPhone number pads have no colon)
+    var m = t.match(/^(\d{1,2})\s*[:.,\s]\s*(\d{2})$/) || t.match(/^(\d{1,2})(\d{2})$/);
     if (!m) return null;
     var secs = +m[1] * 60 + +m[2];
     if (+m[2] > 59 || secs < 210 || secs > 1500) return null;
@@ -367,6 +369,7 @@ footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero
     p.appendChild(b); p.appendChild(document.createTextNode(" (a rough guess with 15 seconds a can)"));
   }
   $("f-time").addEventListener("input", updatePredict);
+  $("f-time").addEventListener("blur", function () { var secs = parseTime(this.value); if (secs) this.value = fmt(secs); });
 
   // Entries from the Google Sheet
   var entries = [], pending = null;
@@ -476,7 +479,7 @@ footer { padding-block: 28px 40px; color: var(--hero-fg); background: var(--hero
     var name = $("f-name").value.trim().replace(/\s+/g, " ");
     var secs = parseTime($("f-time").value);
     if (!name) { msg("Add your name so we know who to cheer for.", "err"); $("f-name").focus(); return; }
-    if (!secs) { msg("Enter your mile time as minutes and seconds, like 6:45 (between 3:30 and 25:00).", "err"); $("f-time").focus(); return; }
+    if (!secs) { msg("Enter your mile time as minutes and seconds, like 6:45 or 645 (between 3:30 and 25:00).", "err"); $("f-time").focus(); return; }
     var cat = radio("cat"), pay = radio("pay");
     var body = new URLSearchParams();
     body.set(FIELDS.name, name); body.set(FIELDS.time, fmt(secs)); body.set(FIELDS.cat, cat); body.set(FIELDS.pay, pay);
